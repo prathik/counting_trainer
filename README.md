@@ -1,4 +1,4 @@
-# counting_trainer
+# Counting Trainer
 
 Use typescript. Make your changes and run
 
