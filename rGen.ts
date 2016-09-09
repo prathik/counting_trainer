@@ -1,0 +1,114 @@
+/// <reference path="jquery.d.ts" />
+
+class CountingTrainer {
+    currentLength: number;
+    currentTrainingData: RandomNumber;
+    constructor(startLength: number) {
+        this.currentLength = startLength;
+    }
+
+    begin() {
+        this.currentTrainingData = new RandomNumber(this.currentLength);
+        return this.currentTrainingData;
+    }
+
+    checkAnswer(answer: number) {
+        return this.currentTrainingData.validate(answer);
+    }
+
+    next(answer: number) {
+        if(this.checkAnswer(answer)) {
+            this.currentLength = this.currentLength + 1;
+            return this.begin();
+        } else {
+            if(this.currentLength == 1) {
+                return this.begin();
+            } else {
+                this.currentLength = this.currentLength - 1;
+                return this.begin();
+            }
+        }
+    }
+}
+
+class RandomNumber {
+    first: number;
+    second: number;
+    constructor(length: number) {
+        var endNum = 0;
+        for(var i = 0; i < length; i++) {
+            endNum = endNum*10 + 9;
+        }
+
+        this.first = this.randomNumberUptoMax(endNum);
+        this.second = this.randomNumberUptoMax(endNum);
+    }
+
+    randomNumberUptoMax(max: number) {
+        return Math.floor(Math.random()*(max+1));
+    }
+
+    validate(answer: number) {
+        if(answer == (this.first+this.second)) {
+            return true;
+        }
+        return false;
+    }
+}
+
+$(document).ready(function() {
+    var trainer = new CountingTrainer(1);
+    var rData = trainer.begin();
+    var intervalID;
+    
+    function load(rData: RandomNumber, first: boolean) {
+        if(!first) {
+            window.clearInterval(intervalID);
+        }
+        $("#first").text(rData.first);
+        $("#second").text(rData.second);
+        intervalID = setInterval(intervalNext, 10000);
+    }
+
+    function showSuccess(message: string) {
+        $("#message").removeClass("text-warning").addClass("text-success");
+        $("#message").text(message);
+    }
+
+    function showWarning(message: string) {
+        $("#message").removeClass("text-success");
+        $("#message").addClass("text-warning");
+        $("#message").text(message);
+    }
+
+    function showMessage(answer: number) {
+        if(trainer.checkAnswer(answer)) {
+            showSuccess("Your answer is correct! Try the next one.");
+        } else {
+            showWarning("Wrong answer. Try again.");
+        }
+    }
+
+    function intervalNext() {
+        showWarning("Your time to answer is up. Values have changed.");
+        next(true);
+    }
+
+    load(rData, true);
+    function next(intervalClear: boolean) {
+        var rD;
+        var answer = $("#answer").val();
+        
+        if(answer == "") {
+            rD = trainer.next(-1);
+        } else {
+            if(!intervalClear) {
+                showMessage(answer);
+            }
+            rD = trainer.next(answer);
+        }
+        
+        load(rD, false);
+    }
+    $("#next").click(function() { next(false); });
+});
