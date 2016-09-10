@@ -29,15 +29,17 @@ var CountingTrainer = (function () {
 }());
 var RandomNumber = (function () {
     function RandomNumber(length) {
-        var endNum = 0;
+        this.endNum = 0;
+        this.startNum = Math.pow(10, length);
         for (var i = 0; i < length; i++) {
-            endNum = endNum * 10 + 9;
+            this.endNum = this.endNum * 10 + 9;
         }
-        this.first = this.randomNumberUptoMax(endNum);
-        this.second = this.randomNumberUptoMax(endNum);
+        this.first = this.randomNumberUptoMax();
+        this.second = this.randomNumberUptoMax();
     }
-    RandomNumber.prototype.randomNumberUptoMax = function (max) {
-        return Math.floor(Math.random() * (max + 1));
+    RandomNumber.prototype.randomNumberUptoMax = function () {
+        return Math.floor(Math.random() * (this.endNum - this.startNum + 1)
+            + this.startNum);
     };
     RandomNumber.prototype.validate = function (answer) {
         if (answer == (this.first + this.second)) {

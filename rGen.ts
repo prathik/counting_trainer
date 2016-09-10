@@ -34,18 +34,25 @@ class CountingTrainer {
 class RandomNumber {
     first: number;
     second: number;
+    endNum: number;
+    startNum: number;
+    
     constructor(length: number) {
-        var endNum = 0;
+        this.endNum = 0;
+        this.startNum = Math.pow(10, length);
+
         for(var i = 0; i < length; i++) {
-            endNum = endNum*10 + 9;
+            this.endNum = this.endNum*10 + 9;
         }
 
-        this.first = this.randomNumberUptoMax(endNum);
-        this.second = this.randomNumberUptoMax(endNum);
+        this.first = this.randomNumberUptoMax();
+        this.second = this.randomNumberUptoMax();
     }
 
-    randomNumberUptoMax(max: number) {
-        return Math.floor(Math.random()*(max+1));
+    randomNumberUptoMax() {
+        return Math.floor(Math.random() * (
+            this.endNum - this.startNum+1)
+                          + this.startNum);
     }
 
     validate(answer: number) {
