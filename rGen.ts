@@ -118,4 +118,11 @@ $(document).ready(function() {
         load(rD, false);
     }
     $("#next").click(function() { next(false); });
+
+    $("#answer").keypress(function (e) {
+        if (e.which == 13) {
+            next(false);
+        }
+    });
+
 });
