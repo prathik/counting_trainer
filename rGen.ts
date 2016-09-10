@@ -39,7 +39,7 @@ class RandomNumber {
     
     constructor(length: number) {
         this.endNum = 0;
-        this.startNum = Math.pow(10, length);
+        this.startNum = Math.pow(10, length - 1);
 
         for(var i = 0; i < length; i++) {
             this.endNum = this.endNum*10 + 9;
