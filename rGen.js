@@ -59,6 +59,7 @@ $(document).ready(function () {
         }
         $("#first").text(rData.first);
         $("#second").text(rData.second);
+        $("#answer").val("");
         intervalID = setInterval(intervalNext, 10000);
     }
     function showSuccess(message) {
