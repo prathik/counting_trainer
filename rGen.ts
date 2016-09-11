@@ -75,7 +75,7 @@ $(document).ready(function() {
         $("#first").text(rData.first);
         $("#second").text(rData.second);
         $("#answer").val("");
-        intervalID = setInterval(intervalNext, 10000);
+        intervalID = setInterval(intervalNext, 15000);
     }
 
     function showSuccess(message: string) {
@@ -91,7 +91,11 @@ $(document).ready(function() {
 
     function showMessage(answer: number) {
         if(trainer.checkAnswer(answer)) {
-            showSuccess("Your answer is correct! Try the next one.");
+            if(trainer.currentLength == 6) {
+                showSuccess("<b>Success! You are able to add up to 6 digits in 15 seconds!</b>");
+            } else {
+                showSuccess("Your answer is correct! Try the next one.");
+            }
         } else {
             showWarning("Wrong answer. Try again.");
         }
