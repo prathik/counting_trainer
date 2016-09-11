@@ -91,8 +91,8 @@ $(document).ready(function() {
 
     function showMessage(answer: number) {
         if(trainer.checkAnswer(answer)) {
-            if(trainer.currentLength == 6) {
-                showSuccess("<b>Success! You are able to add up to 6 digits in 15 seconds!</b>");
+            if(trainer.currentLength == 7) {
+                showSuccess("Success! You are able to add up to 7 digits in 15 seconds!");
             } else {
                 showSuccess("Your answer is correct! Try the next one.");
             }
